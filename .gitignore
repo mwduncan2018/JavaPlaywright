@@ -1,0 +1,69 @@
+# --- Java & Maven ---
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# --- Playwright Specifics ---
+# Exclude the videos and traces generated during test runs
+test-results/
+target/videos/
+target/screenshots/
+playwright-report/
+blob-report/
+playwright/.local-browsers/
+
+# --- IDE Specifics ---
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Eclipse
+.settings/
+.project
+.classpath
+bin/
+
+# VS Code
+.vscode/
+
+# --- Operating System ---
+.DS_Store
+Thumbs.db
+
+# --- Configuration & Secrets ---
+# If your config.properties contains sensitive data (passwords, keys),
+# uncomment the line below. Otherwise, keep it tracked.
+# src/test/resources/config.properties
+
+# --- Log files ---
+*.log
+
+# --- TestNG Specifics ---
+test-output/
+temp-testng.xml
+testng-failed.xml
+testng-results.xml
+
+# --- Build and Test Outputs ---
+target/
+test-output/
+test-results/
+bin/
+out/
+
+# --- Playwright Specifics ---
+target/videos/
+target/screenshots/
+playwright-report/
+.last-run
+
+# --- IDE Specifics ---
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+.vscode/
