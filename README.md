@@ -1,5 +1,5 @@
 # JavaPlaywright
 
-#### This is test automation framework built with Java, TestNG, Cucumber, and Playwright.
+#### Test automation of a React website using Java, TestNG, Cucumber, and Playwright
 
-#### React site under test [ReactDuncanSafeApp](https://github.com/mwduncan2018/ReactDuncanSafeApp)
+#### React site under test -> [ReactDuncanSafeApp](https://github.com/mwduncan2018/ReactDuncanSafeApp)
