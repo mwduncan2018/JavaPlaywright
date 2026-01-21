@@ -24,7 +24,7 @@ public class RunCucumberTest extends AbstractTestNGCucumberTests {
 	@Override
 	@DataProvider(parallel = true)
 	// TestNG Cucumber parallel execution is enabled with DataProvider
-	// Number of threads in configured in the pom.xml with dataproviderthreadcount
+	// Number of threads is configured in the pom.xml with dataproviderthreadcount
 	public Object[][] scenarios() {
 		return super.scenarios();
 	}
