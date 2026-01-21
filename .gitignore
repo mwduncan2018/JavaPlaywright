@@ -1,69 +1,48 @@
-# --- Java & Maven ---
-target/
-*.class
-*.jar
-*.war
-*.ear
-
-# --- Playwright Specifics ---
-# Exclude the videos and traces generated during test runs
-test-results/
-target/videos/
-target/screenshots/
-playwright-report/
-blob-report/
-playwright/.local-browsers/
-
-# --- IDE Specifics ---
-# IntelliJ
-.idea/
-*.iml
-out/
-
-# Eclipse
-.settings/
-.project
-.classpath
-bin/
-
-# VS Code
-.vscode/
-
-# --- Operating System ---
-.DS_Store
-Thumbs.db
-
-# --- Configuration & Secrets ---
-# If your config.properties contains sensitive data (passwords, keys),
-# uncomment the line below. Otherwise, keep it tracked.
-# src/test/resources/config.properties
-
-# --- Log files ---
-*.log
-
-# --- TestNG Specifics ---
-test-output/
-temp-testng.xml
-testng-failed.xml
-testng-results.xml
-
 # --- Build and Test Outputs ---
 target/
 test-output/
 test-results/
 bin/
 out/
+*.class
+*.jar
+*.war
+*.ear
 
 # --- Playwright Specifics ---
+# Excludes browser binaries, reports, and session data
+playwright-report/
+blob-report/
+playwright/.local-browsers/
 target/videos/
 target/screenshots/
-playwright-report/
-.last-run
+target/state.json
 
-# --- IDE Specifics ---
-.idea/
-*.iml
+# --- Allure Reporting ---
+# Exclude raw results, generated reports, and CLI tool data
+allure-results/
+allure-report/
+.allure/
+
+# --- IDE Specifics (Eclipse, IntelliJ, VS Code) ---
 .settings/
 .project
 .classpath
+.idea/
+*.iml
 .vscode/
+
+# --- Operating System ---
+.DS_Store
+Thumbs.db
+
+# --- Log files ---
+*.log
+
+# --- TestNG Specifics ---
+temp-testng.xml
+testng-failed.xml
+testng-results.xml
+
+# --- Configuration & Secrets ---
+# src/test/resources/config.properties
