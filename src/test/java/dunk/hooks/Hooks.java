@@ -31,7 +31,9 @@ public class Hooks implements En {
 		Before((scenario) -> {
 			System.out.println(">>> Starting Scenario: " + scenario.getName());
 
-			int speed = RECORD_VIDEO ? 250 : 0;
+			// Set speed of automation for video
+			int speed = RECORD_VIDEO ? 0 : 0;
+			
 			context.playwright = Playwright.create();
 			context.browser = context.playwright.chromium()
 					.launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(speed));
@@ -58,17 +60,17 @@ public class Hooks implements En {
 			context.watchListDeletePage = new WatchListDeletePage(context.page);
 			context.contactPage = new ContactPage(context.page);
 			context.navbarPage = new NavbarPage(context.page);
-			
+
 			context.page.navigate(ConfigReader.getLocalUrl());
 		});
 
 		After((scenario) -> {
 			System.out.println(">>> Closing Scenario: " + scenario.getName());
 
-			// 1. Capture the video path before closing
+			// Capture the video path before closing
 			java.nio.file.Path videoPath = context.page.video() != null ? context.page.video().path() : null;
 
-			// 2. Must close context to finish writing the file
+			// Close context to finish writing the file
 			if (context.browserContext != null) {
 				context.browserContext.close();
 			}
@@ -79,7 +81,7 @@ public class Hooks implements En {
 				context.playwright.close();
 			}
 
-			// 3. Rename the file after everything is closed
+			// Rename the video file
 			if (videoPath != null && RECORD_VIDEO) {
 				String friendlyName = scenario.getName().replaceAll(" ", "_") + ".webm";
 				java.nio.file.Path finalPath = videoPath.resolveSibling(friendlyName);

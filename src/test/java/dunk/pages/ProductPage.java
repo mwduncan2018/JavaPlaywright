@@ -21,8 +21,8 @@ public class ProductPage {
 	private final String btnEdit = "td:nth-child(6) a:nth-child(1)";
 	private final String btnDetails = "td:nth-child(6) a:nth-child(2)";
 	private final String btnDelete = "td:nth-child(6) a:nth-child(3)";
-	private final String chkMatch = "td:nth-child(1) > input";
-	private final String chkFuzzyMatch = "td:nth-child(7) > input";
+	private final String chkMatch = "td:nth-child(1)";
+	private final String chkFuzzyMatch = "td:nth-child(7)";
 
 	public ProductPage(Page page) {
 		this.page = page;
@@ -57,16 +57,13 @@ public class ProductPage {
 		getProductRow(product).locator(btnDelete).click();
 	}
 
-	// Logic Helpers
 	public boolean isFuzzyMatchingEnabled() {
 		return page.textContent(btnFuzzyMatching).equals("Disable Fuzzy Matching!");
 	}
 
-	/**
-	 * Locates a specific row based on Manufacturer AND Model
-	 */
+	// Locates a specific row based on Manufacturer and Model
 	public Locator getProductRow(Product product) {
-		return page.locator(tableRows)
+		return page.locator(tableRows) 
 				.filter(new Locator.FilterOptions().setHas(page.locator(colManufacturer)
 						.filter(new Locator.FilterOptions().setHasText(product.manufacturer))))
 				.filter(new Locator.FilterOptions()
@@ -81,10 +78,17 @@ public class ProductPage {
 	}
 
 	public boolean isProductAMatch(Product product) {
-		return getProductRow(product).locator(chkMatch).isChecked();
+	    String status = getProductRow(product).locator(chkMatch).textContent();
+	    return status != null && status.trim().equalsIgnoreCase("True");
 	}
 
 	public boolean isProductAFuzzyMatch(Product product) {
-		return getProductRow(product).locator(chkFuzzyMatch).isChecked();
+	    Locator row = getProductRow(product);
+	    Locator fuzzyCell = row.locator(chkFuzzyMatch);
+	    if (fuzzyCell.count() > 0 && fuzzyCell.isVisible()) {
+	        String status = fuzzyCell.textContent();
+	        return status != null && status.trim().equalsIgnoreCase("True");
+	    }
+	    return false;
 	}
 }

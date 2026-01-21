@@ -1,4 +1,4 @@
-package dunk.practice.alpha;
+package dunk.z.practice;
 
 import java.lang.reflect.Method;
 import java.nio.file.Paths;

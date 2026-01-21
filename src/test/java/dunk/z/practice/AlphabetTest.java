@@ -1,4 +1,4 @@
-package dunk.practice.alpha;
+package dunk.z.practice;
 
 import java.nio.file.Paths;
 import org.testng.annotations.Test;

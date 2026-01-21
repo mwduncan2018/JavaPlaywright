@@ -19,7 +19,7 @@ import io.cucumber.testng.CucumberOptions;
 				"json:target/cucumber-reports/CucumberTestReport.json" },
 
 		// Run specific tags
-		tags = "@sandbox")
+		tags = "not @ignore")
 public class RunCucumberTest extends AbstractTestNGCucumberTests {
 
 	@Override

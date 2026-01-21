@@ -1,12 +1,12 @@
-﻿@fuzzyMatching
+@fuzzyMatching
 Feature: Fuzzy matching
 	Fuzzy matching indicates a match if either manufacturer or model match.
 
 Scenario Outline: Manufacturer match, model match
-	Given a product is added with manufacturer <productManufacturer> and model <productModel>
-	And an entry is added with manufacturer <entryManufacturer> and model <entryModel>
+	Given a product is added with manufacturer "<productManufacturer>" and model "<productModel>"
+	And an entry is added with manufacturer "<entryManufacturer>" and model "<entryModel>"
 	When fuzzy matching is enabled
-	Then the product with manufacturer <productManufacturer> and model <productModel> is a standard match
+	Then the product with manufacturer "<productManufacturer>" and model "<productModel>" is a standard match
 
 	Examples:
 	| productManufacturer | productModel               | entryManufacturer | entryModel                 |
@@ -17,10 +17,10 @@ Scenario Outline: Manufacturer match, model match
 
 
 Scenario Outline: Manufacturer no match, model no match
-	Given a product is added with manufacturer <productManufacturer> and model <productModel>
-	And an entry is added with manufacturer <entryManufacturer> and model <entryModel>
+	Given a product is added with manufacturer "<productManufacturer>" and model "<productModel>"
+	And an entry is added with manufacturer "<entryManufacturer>" and model "<entryModel>"
 	When fuzzy matching is enabled
-	Then the product with manufacturer <productManufacturer> and model <productModel> is not a match
+	Then the product with manufacturer "<productManufacturer>" and model "<productModel>" is not a match
 
 	Examples:
 	| productManufacturer | productModel           | entryManufacturer | entryModel           |
@@ -29,10 +29,10 @@ Scenario Outline: Manufacturer no match, model no match
 	| Taco Bell           | Quesarito              | Burger King       | Bacon King           |
 
 Scenario Outline: Manufacturer match, model no match
-	Given a product is added with manufacturer <productManufacturer> and model <productModel>
-	And an entry is added with manufacturer <entryManufacturer> and model <entryModel>
+	Given a product is added with manufacturer "<productManufacturer>" and model "<productModel>"
+	And an entry is added with manufacturer "<entryManufacturer>" and model "<entryModel>"
 	When fuzzy matching is enabled
-	Then the product with manufacturer <productManufacturer> and model <productModel> is a fuzzy match
+	Then the product with manufacturer "<productManufacturer>" and model "<productModel>" is a fuzzy match
 
 	Examples:
 	| productManufacturer | productModel             | entryManufacturer | entryModel              |
@@ -40,10 +40,10 @@ Scenario Outline: Manufacturer match, model no match
 	| Burger King         | Spicy Chicken Sandwich   | Burger King       | Chicken Deluxe Sandwich |
 
 Scenario Outline: Manufacturer no match, model match
-	Given a product is added with manufacturer <productManufacturer> and model <productModel>
-	And an entry is added with manufacturer <entryManufacturer> and model <entryModel>
+	Given a product is added with manufacturer "<productManufacturer>" and model "<productModel>"
+	And an entry is added with manufacturer "<entryManufacturer>" and model "<entryModel>"
 	When fuzzy matching is enabled
-	Then the product with manufacturer <productManufacturer> and model <productModel> is a fuzzy match
+	Then the product with manufacturer "<productManufacturer>" and model "<productModel>" is a fuzzy match
 
 	Examples:
 	| productManufacturer | productModel     | entryManufacturer | entryModel       |

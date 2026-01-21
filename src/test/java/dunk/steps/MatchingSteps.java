@@ -12,21 +12,19 @@ public class MatchingSteps implements En {
 
 	public MatchingSteps(ScenarioContext context) {
 
-		Given("a product is added with manufacturer {string} and model {string}",
-				(String manufacturer, String model) -> {
-					Product product = new Product();
-					product.manufacturer = manufacturer;
-					product.model = model;
-					product.numberInStock = "1";
-					product.price = "1";
+		Given("a product is added with manufacturer {string} and model {string}", (String manufacturer, String model) -> {
+			Product product = new Product();
+			product.manufacturer = manufacturer;
+			product.model = model;
+			product.numberInStock = "1";
+			product.price = "1";
 
-					// Page interactions via ScenarioContext
-					context.navbarPage.goToProductList();
-					context.productPage.addNewProduct();
-					context.productAddPage.addProduct(product);
+			context.navbarPage.goToProductList();
+			context.productPage.addNewProduct();
+			context.productAddPage.addProduct(product);
 
-					context.set("product", product);
-				});
+			context.activeProduct = product;
+		});
 
 		And("an entry is added with manufacturer {string} and model {string}", (String manufacturer, String model) -> {
 			WatchListEntry entry = new WatchListEntry();
@@ -37,7 +35,7 @@ public class MatchingSteps implements En {
 			context.watchListPage.addNewEntry();
 			context.watchListAddPage.addEntry(entry);
 
-			context.set("entry", entry);
+			context.activeWatchListEntry = entry;
 		});
 
 		When("fuzzy matching is enabled", () -> {
@@ -50,33 +48,30 @@ public class MatchingSteps implements En {
 			context.productPage.enableStandardMatching();
 		});
 
-		Then("the product with manufacturer {string} and model {string} is a standard match",
-				(String manufacturer, String model) -> {
-					Product product = (Product) context.get("product");
+		Then("the product with manufacturer {string} and model {string} is a standard match", (String manufacturer, String model) -> {
+			Product product = context.activeProduct;
 
-					boolean isMatch = context.productPage.isProductAMatch(product);
-					Assert.assertTrue(isMatch,
-							"Expected standard match (Column 1) to be checked for: " + manufacturer + " " + model);
-				});
+			boolean isMatch = context.productPage.isProductAMatch(product);
+			
+			Assert.assertTrue(isMatch, "Expected a standard match: " + manufacturer + " " + model);
+		});
 
-		Then("the product with manufacturer {string} and model {string} is a fuzzy match",
-				(String manufacturer, String model) -> {
-					Product product = (Product) context.get("product");
+		Then("the product with manufacturer {string} and model {string} is a fuzzy match", (String manufacturer, String model) -> {
+			Product product = context.activeProduct;
 
-					boolean isFuzzy = context.productPage.isProductAFuzzyMatch(product);
-					Assert.assertTrue(isFuzzy,
-							"Expected fuzzy match (Column 7) to be checked for: " + manufacturer + " " + model);
-				});
+			boolean isFuzzy = context.productPage.isProductAFuzzyMatch(product);
+			
+			Assert.assertTrue(isFuzzy, "Expected a fuzzy: " + manufacturer + " " + model);
+		});
 
-		Then("the product with manufacturer {string} and model {string} is not a match",
-				(String manufacturer, String model) -> {
-					Product product = (Product) context.get("product");
+		Then("the product with manufacturer {string} and model {string} is not a match", (String manufacturer, String model) -> {
+			Product product = context.activeProduct;
 
-					boolean isMatch = context.productPage.isProductAMatch(product);
-					boolean isFuzzy = context.productPage.isProductAFuzzyMatch(product);
+			boolean isMatch = context.productPage.isProductAMatch(product);
+			boolean isFuzzy = context.productPage.isProductAFuzzyMatch(product);
 
-					Assert.assertFalse(isMatch, "Expected standard match to be UNCHECKED");
-					Assert.assertFalse(isFuzzy, "Expected fuzzy match to be UNCHECKED");
-				});
+			Assert.assertFalse(isMatch, "Expected no standard match: " + manufacturer + " " + model);
+			Assert.assertFalse(isFuzzy, "Expected no fuzzy match: " + manufacturer + " " + model);
+		});
 	}
 }
