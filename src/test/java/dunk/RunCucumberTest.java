@@ -14,9 +14,8 @@ import io.cucumber.testng.CucumberOptions;
 		// Step Definition and Hook location
 		glue = { "dunk.steps", "dunk.hooks" },
 
-		// Reporting and Console output
-		plugin = { "pretty", "html:target/cucumber-reports/cucumber-pretty.html",
-				"json:target/cucumber-reports/CucumberTestReport.json" },
+		// Reporting
+		plugin = { "pretty", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" },
 
 		// Run specific tags
 		tags = "not @ignore")

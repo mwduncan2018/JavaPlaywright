@@ -1,6 +1,10 @@
 package dunk.hooks;
 
 import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.InputStream;
+import io.qameta.allure.Allure;
+import java.io.ByteArrayInputStream;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
@@ -25,22 +29,20 @@ import dunk.pages.WatchListPage;
 public class Hooks implements En {
 
 	public static boolean RECORD_VIDEO = true;
+	public static boolean HEADLESS = true;
+	public static int EXECUTION_SPEED = 0;
 
 	public Hooks(ScenarioContext context) {
 
 		Before((scenario) -> {
 			System.out.println(">>> Starting Scenario: " + scenario.getName());
-
-			// Set speed of automation for video
-			int speed = RECORD_VIDEO ? 0 : 0;
-			
+		
 			context.playwright = Playwright.create();
 			context.browser = context.playwright.chromium()
-					.launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(speed));
+					.launch(new BrowserType.LaunchOptions().setHeadless(HEADLESS).setSlowMo(EXECUTION_SPEED));
 			if (RECORD_VIDEO) {
-				String videoPath = "target/videos/" + scenario.getName().replaceAll(" ", "_");
 				context.browserContext = context.browser.newContext(new Browser.NewContextOptions()
-						.setRecordVideoDir(Paths.get(videoPath)).setRecordVideoSize(1280, 720));
+						.setRecordVideoDir(Paths.get("target/videos/")).setRecordVideoSize(1280, 720));
 			} else {
 				context.browserContext = context.browser.newContext();
 			}
@@ -66,11 +68,18 @@ public class Hooks implements En {
 
 		After((scenario) -> {
 			System.out.println(">>> Closing Scenario: " + scenario.getName());
+			
+			// Screenshot on Failure
+			if (scenario.isFailed()) {
+				byte[] screenshot = context.page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
+				Allure.addAttachment("Failed Scenario Screenshot", new ByteArrayInputStream(screenshot));
+			}
 
-			// Capture the video path before closing
-			java.nio.file.Path videoPath = context.page.video() != null ? context.page.video().path() : null;
+			// Capture the video path while the page is still open
+			java.nio.file.Path videoPath = (context.page != null && context.page.video() != null) 
+											? context.page.video().path() : null;
 
-			// Close context to finish writing the file
+			// Must close everything in this order to save the video file
 			if (context.browserContext != null) {
 				context.browserContext.close();
 			}
@@ -81,16 +90,13 @@ public class Hooks implements En {
 				context.playwright.close();
 			}
 
-			// Rename the video file
-			if (videoPath != null && RECORD_VIDEO) {
-				String friendlyName = scenario.getName().replaceAll(" ", "_") + ".webm";
-				java.nio.file.Path finalPath = videoPath.resolveSibling(friendlyName);
-
-				try {
-					java.nio.file.Files.move(videoPath, finalPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-					System.out.println(">>> Video saved as: " + friendlyName);
+			// Attach to Allure from the default location
+			if (videoPath != null && RECORD_VIDEO && scenario.isFailed()) {
+				try (InputStream is = Files.newInputStream(videoPath)) {
+					Allure.addAttachment("Execution Video", "video/webm", is, ".webm");
+					System.out.println(">>> Video attached to Allure from source: " + videoPath);
 				} catch (java.io.IOException e) {
-					System.err.println("Could not rename video: " + e.getMessage());
+					System.err.println("Allure video attachment failed: " + e.getMessage());
 				}
 			}
 		});

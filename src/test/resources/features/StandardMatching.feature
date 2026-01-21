@@ -10,8 +10,8 @@ Scenario Outline: Manufacturer match, model match
 
 	Examples:
 	| productManufacturer | productModel | entryManufacturer | entryModel |
-	| Porsche             | Cayenne      | Porsche           | Cayenne    |
-	| Porsche             | Boxster      | Porsche           | Boxster    |
+	| Porsche             | Cayenne      | PorscheEdit       | Cayenne    |
+	| Porsche             | Boxster      | PorscheEdit       | Boxster    |
 
 Scenario Outline: Manufacturer no match, model no match
 	Given a product is added with manufacturer "<productManufacturer>" and model "<productModel>"
