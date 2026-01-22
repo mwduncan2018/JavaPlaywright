@@ -7,7 +7,7 @@
 
 #### React site under test -> [ReactDuncanSafeApp](https://github.com/mwduncan2018/ReactDuncanSafeApp)
 
-# Maven
+## Maven
 ```
 // Execute All Tests
 mvn clean test
