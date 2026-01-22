@@ -7,7 +7,7 @@
 
 #### React site under test -> [ReactDuncanSafeApp](https://github.com/mwduncan2018/ReactDuncanSafeApp)
 
-## Maven
+# Maven
 ```
 // Execute All Tests
 mvn clean test
@@ -16,7 +16,7 @@ mvn clean test
 mvn test '-Dcucumber.filter.tags=@fuzzyMatching'
 ```
 
-## Docker
+# Docker
 ```
 // Build Image
 docker build -t java-playwright .
@@ -33,7 +33,7 @@ docker run --rm `
   mvn test '-Dcucumber.filter.tags=@fuzzyMatching'
 ```
 
-## Generate Allure Report
+# Generate Allure Report
 ```
 allure serve allure-results
 ```
