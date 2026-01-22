@@ -1,0 +1,31 @@
+# Ignore build outputs
+target/
+bin/
+out/
+
+# Ignore local test results and videos
+allure-results/
+allure-report/
+videos/
+screenshots/
+
+# Ignore IDE settings
+.settings/
+.project/
+.classpath/
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# Ignore Docker files themselves
+Dockerfile
+.dockerignore
+
+# Ignore Version Control
+.git/
+.gitignore
+
+# Ignore local system files
+.DS_Store
+Thumbs.db

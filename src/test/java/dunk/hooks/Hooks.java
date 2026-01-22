@@ -42,7 +42,7 @@ public class Hooks implements En {
 					.launch(new BrowserType.LaunchOptions().setHeadless(HEADLESS).setSlowMo(EXECUTION_SPEED));
 			if (RECORD_VIDEO) {
 				context.browserContext = context.browser.newContext(new Browser.NewContextOptions()
-						.setRecordVideoDir(Paths.get("target/videos/")).setRecordVideoSize(1280, 720));
+						.setRecordVideoDir(Paths.get(System.getProperty("user.dir"), "target", "videos")).setRecordVideoSize(1280, 720));
 			} else {
 				context.browserContext = context.browser.newContext();
 			}
