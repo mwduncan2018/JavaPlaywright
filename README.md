@@ -6,11 +6,25 @@
 
 #### React site under test -> [ReactDuncanSafeApp](https://github.com/mwduncan2018/ReactDuncanSafeApp)
 
-#### Generate Allure Report -> allure serve allure-results
+# Maven Execute
+```
+// Execute all tests
+mvn clean test
 
-#### Docker Build & Execute
+// Execute a specific feature file
+mvn test -Dcucumber.filter.tags="@fuzzyMatching"
+```
+
+## Docker Build & Execute
 ```
 docker build -t java-playwright .
 
 docker run --rm -v ${PWD}/allure-results:/app/allure-results -v ${PWD}/target/videos:/app/target/videos --add-host=host.docker.internal:host-gateway java-playwright
 ```
+
+## Generate Allure Report
+```
+allure serve allure-results
+```
+
+
